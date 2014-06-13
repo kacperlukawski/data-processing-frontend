@@ -20,6 +20,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     protected $hidden = array('password');
 
     /**
+     * Setup events
+     */
+    public static function boot() {
+        parent::boot();
+        
+        User::creating(function($user){
+            $user->password = hash('sha256', $user->password);
+        });
+    }
+    
+    /**
      * Get the unique identifier for the user.
      *
      * @return mixed
@@ -72,6 +83,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     public function getReminderEmail() {
         return $this->email;
+    }
+
+    /**
+     * Get files that current user own
+     * 
+     * @return type
+     */
+    public function files() {
+        return $this->hasMany('DataFile');
     }
 
 }
