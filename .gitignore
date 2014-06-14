@@ -1,3 +1,6 @@
 /nbproject/
 /vendor/
-/app/public/upload/*
+/app/config/app.php
+/app/config/cache.php
+/app/config/database.php
+/public/upload/*
