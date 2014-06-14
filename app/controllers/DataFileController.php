@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class DataFileController extends BaseController {
 
     public function __construct() {
@@ -58,10 +60,10 @@ class DataFileController extends BaseController {
         $user = Auth::user();
         $cacheKey = 'list_'.$user->id;
          
-        $dataFiles = getFromCache($cacheKey);
+        $dataFiles = $this->getFromCache($cacheKey);
         if ($dataFiles == null) {
         	$dataFiles = DataFile::where('user_id', '=', $user->id)->get();
-        	addToCache($cacheKey, $dataFiles);
+        	$this->addToCache($cacheKey, $dataFiles);
         }
         return View::make('datafile.list')
                         ->with('dataFiles', $dataFiles);
@@ -70,10 +72,10 @@ class DataFileController extends BaseController {
     public function getShow($dataFileId) {
     	$cacheKey = 'data_file_'.$dataFileId;
     	
-    	$dataFile = getFromCache($cacheKey);
+    	$dataFile = $this->getFromCache($cacheKey);
     	if ($dataFile == null) {
     		$dataFile = $this->getDataFileIfAllowed($dataFileId);
-    		addToCache($cacheKey, $dataFile);
+    		$this->addToCache($cacheKey, $dataFile);
     	}
         return View::make('datafile.show')
                         ->with('dataFile', $dataFile)
@@ -82,10 +84,10 @@ class DataFileController extends BaseController {
 
     public function getEdit($dataFileVersionId) {
     	$cacheKey = 'data_file_version_'.$dataFileVersionId;
-    	$dataFileVersion = getFromCache($cacheKey);
+    	$dataFileVersion = $this->getFromCache($cacheKey);
     	if ($dataFileVersion == null) {
     		$dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
-        	addToCache($cacheKey, $dataFileVersion);
+        	$this->addToCache($cacheKey, $dataFileVersion);
     	}
         return View::make('datafile.edit')
                         ->with('dataFileVersion', $dataFileVersion);
