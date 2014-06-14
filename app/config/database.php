@@ -54,7 +54,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'https://mariadb-cloud-pr.jelastic.dogado.eu',
+			'host'      => 'mariadb-cloud-pr.jelastic.dogado.eu',
 			'database'  => 'data-processing',
 			'username'  => 'root',
 			'password'  => 'password00', 
