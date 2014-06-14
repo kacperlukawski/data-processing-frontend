@@ -60,7 +60,7 @@ class DataFileController extends BaseController {
         return Redirect::action('DataFileController@getShow', array($dataFile->id));
     }
 
-    public function getList() {
+    public function getList() { 
         $user = Auth::user();
         $cacheKey = 'list_'.$user->id;
          
