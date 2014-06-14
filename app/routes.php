@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
+Route::get('/', 'HomeController@getIndex');
 Route::controller('user', 'UserController');
+Route::controller('datafile', 'DataFileController');

@@ -26,7 +26,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         parent::boot();
         
         User::creating(function($user){
-            $user->password = hash('sha256', $user->password);
+            $user->password = Hash::make($user->password);
         });
     }
     
