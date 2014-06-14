@@ -11,7 +11,7 @@ class DataFileVersion extends Eloquent {
      * @return DataFile
      */
     public function file() {
-        return $this->belongsTo('DataFile');
+        return $this->belongsTo('DataFile', 'data_file_id', 'id');
     }
 
 }

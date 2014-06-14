@@ -1,5 +1,4 @@
 <?php if (Auth::check()): ?>
-    <pre><?php print_r($user); ?></pre>
     <ul>
         <li><a href="<?php echo URL::action('UserController@anyLogout'); ?>">Logout</a></li>
     </ul>

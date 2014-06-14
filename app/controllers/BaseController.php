@@ -2,6 +2,10 @@
 
 class BaseController extends Controller {
 
+    public function __construct() {
+        View::share('user', Auth::user());
+    }
+    
     /**
      * Setup the layout used by the controller.
      *

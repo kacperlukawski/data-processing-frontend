@@ -12,5 +12,8 @@
 */
 
 Route::get('/', 'HomeController@getIndex');
+Route::get('/login', function(){
+    return Redirect::action('UserController@getLogin');
+});
 Route::controller('user', 'UserController');
 Route::controller('datafile', 'DataFileController');
