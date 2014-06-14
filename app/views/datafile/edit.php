@@ -1,4 +1,7 @@
 <h1>Editing </h1>
+<p>
+    <a href="<?php echo URL::action('DataFileController@getList'); ?>">Return to list</a>
+</p>
 <?php echo Form::model($dataFileVersion, array('action' => 'DataFileController@postEdit', 'method' => 'post')); ?>
 <ul>
     <li><?php echo Form::hidden('id', $dataFileVersion->id) ?><?php echo Form::label('name', 'Filename'); ?> <?php echo Form::text('name'); ?> <?php echo $errors->first('name'); ?></li>

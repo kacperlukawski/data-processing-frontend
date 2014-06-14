@@ -1,4 +1,7 @@
 <h1>Create new data file</h1>
+<p>
+    <a href="<?php echo URL::action('DataFileController@getList'); ?>">Return to list</a>
+</p>
 <?php echo Form::model($datafile, array('action' => 'DataFileController@postCreate', 'method' => 'post', 'files' => true)); ?>
 <ul>
     <li><?php echo Form::label('File'); ?> <?php echo Form::file('file'); ?> <?php echo $errors->first('file'); ?></li>

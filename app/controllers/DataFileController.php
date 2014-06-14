@@ -64,7 +64,8 @@ class DataFileController extends BaseController {
     public function getShow($dataFileId) {
         $dataFile = $this->getDataFileIfAllowed($dataFileId);
         return View::make('datafile.show')
-                        ->with('dataFile', $dataFile);
+                        ->with('dataFile', $dataFile)
+                        ->with('fileHeaders', $dataFile->current->path);
     }
 
     public function getEdit($dataFileVersionId) {
@@ -87,11 +88,11 @@ class DataFileController extends BaseController {
             return Redirect::action('DataFileController@getEdit')
                             ->withErrors($dataFileValidator);
         }
-        
+
         $dataFileVersion->name = Input::get('name');
         $dataFileVersion->description = Input::get('description');
         $dataFileVersion->push();
-        
+
         return Redirect::action('DataFileController@getShow', array($dataFileVersion->data_file_id));
     }
 
@@ -108,7 +109,7 @@ class DataFileController extends BaseController {
 
     public function postTransform() {
         $dataFileVersionId = Input::get('version_id');
-        $transformName = 'empty';
+        $transformName = Input::get('transform');
 
         $dataFileCurrentVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
         $dataFile = $dataFileCurrentVersion->file;
