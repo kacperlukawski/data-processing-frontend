@@ -56,25 +56,48 @@ class DataFileController extends BaseController {
 
     public function getList() {
         $user = Auth::user();
-        $dataFiles = DataFile::where('user_id', '=', $user->id)->get();
+        $cacheKey = 'list_'.$user->id;
+         
+        $dataFiles = getFromCache($cacheKey);
+        if ($dataFiles == null) {
+        	$dataFiles = DataFile::where('user_id', '=', $user->id)->get();
+        	addToCache($cacheKey, $dataFiles);
+        }
         return View::make('datafile.list')
                         ->with('dataFiles', $dataFiles);
     }
 
     public function getShow($dataFileId) {
-        $dataFile = $this->getDataFileIfAllowed($dataFileId);
+    	$cacheKey = 'data_file_'.$dataFileId;
+    	
+    	$dataFile = getFromCache($cacheKey);
+    	if ($dataFile == null) {
+    		$dataFile = $this->getDataFileIfAllowed($dataFileId);
+    		addToCache($cacheKey, $dataFile);
+    	}
         return View::make('datafile.show')
                         ->with('dataFile', $dataFile);
     }
 
     public function getEdit($dataFileVersionId) {
-        $dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
+    	$cacheKey = 'data_file_version_'.$dataFileVersionId;
+    	$dataFileVersion = getFromCache($cacheKey);
+    	if ($dataFileVersion == null) {
+    		$dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
+        	addToCache($cacheKey, $dataFileVersion);
+    	}
         return View::make('datafile.edit')
                         ->with('dataFileVersion', $dataFileVersion);
     }
 
     public function postEdit() {
-        $dataFileVersionId = Input::get('id');
+    	$dataFileVersionId = Input::get('id');
+    	$cacheKey = 'data_file_version_'.$dataFileVersionId;
+ 
+    	if (Cache::has($cacheKey)) {
+    		Cache::forget($cacheKey);
+    	}
+        
         $dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
 
         $dataFileVersionInfo = Input::only('name', 'description');
@@ -96,6 +119,7 @@ class DataFileController extends BaseController {
     }
 
     public function getHistory($dataFileId) {
+    	// do cache
         $dataFile = $this->getDataFileIfAllowed($dataFileId);
         return View::make('datafile.history')
                         ->with('dataFile', $dataFile);
@@ -107,6 +131,7 @@ class DataFileController extends BaseController {
     }
 
     public function postTransform() {
+    	// wywalam liste i plik
         $dataFileVersionId = Input::get('version_id');
         $transformName = 'empty';
 
@@ -138,6 +163,7 @@ class DataFileController extends BaseController {
      * @return DataFile
      */
     private function getDataFileIfAllowed($dataFileId) {
+    	// cache
         $user = Auth::user();
         $dataFile = DataFile::find($dataFileId);
 
@@ -160,6 +186,7 @@ class DataFileController extends BaseController {
      * @return DataFileVersion
      */
     private function getDataFileVersionIfAllowed($dataFileVersionId) {
+    	// cache
         $user = Auth::user();
         $dataFileVersion = DataFileVersion::find($dataFileVersionId);
 
@@ -174,4 +201,16 @@ class DataFileController extends BaseController {
         return $dataFileVersion;
     }
 
+    private function getFromCache($cacheKey) {
+    	if (Cache::has($cacheKey))
+    	{
+    		return Cache::get($cacheKey);
+    	}
+    	return null;
+    }
+    
+    private function addToCache($cacheKey, $cacheObject) {
+    	$expiresAt = Carbon::now()->addMinutes(60);
+    	Cache::put($cacheKey, $cacheObject, $expiresAt);
+    }
 }
