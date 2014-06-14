@@ -1,0 +1,51 @@
+<?php
+define('TAB', "\t");
+
+function generateName(){
+    $bigLetters = range('A', 'Z');
+    $vowels = array('a', 'e', 'i', 'o', 'u', 'y');
+    $smallLetters = range('a', 'z');
+    
+    $name = $bigLetters[array_rand($bigLetters)];
+    for ($i = 0; $i < rand(3, 5); $i++){
+        $name = $name . $vowels[array_rand($vowels)] . $smallLetters[array_rand($smallLetters)];
+    }
+
+    return $name;
+}
+
+function generateDate($minYear = 1940, $maxYear = 2000){
+    return date('Y-m-d', strtotime(rand($minYear, $maxYear) . '-' . rand(1, 12) . '-' . rand(1, 28)));
+}
+
+$amounts = array(
+    'customers' => 10000,
+    'products' => 10000,
+    'orders' => 100000
+);
+
+// CUSTOMERS
+// id, name, surname, birthdate
+$fHandle = fopen('customers.csv', 'w+');
+for ($i = 1; $i <= $amounts['customers']; $i++){
+    fwrite($fHandle, $i . TAB . generateName() . TAB . generateName() . TAB . generateDate() . PHP_EOL);
+}
+fclose($fHandle);
+
+// PRODUCTS
+// id , name, amount
+$fHandle = fopen('products.csv', 'w+');
+for ($i = 1; $i <= $amounts['products']; $i++){
+    fwrite($fHandle, $i . TAB . generateName() . TAB . rand(0, 1500) . PHP_EOL);
+}
+fclose($fHandle);
+
+
+// ORDERS
+// id , customer_id, product_id, price, date
+$fHandle = fopen('orders.csv', 'w+');
+for ($i = 1; $i <= $amounts['orders']; $i++){
+    fwrite($fHandle, $i . TAB . rand(1, $amounts['customers']) . TAB . rand(1, $amounts['products']) . TAB . (ceil($i % 16 + 1) * rand(5000, 25000) / 100) . TAB . generateDate() . PHP_EOL);
+}
+fclose($fHandle);
+
