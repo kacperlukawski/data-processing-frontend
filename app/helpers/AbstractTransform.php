@@ -48,7 +48,7 @@ abstract class AbstractTransform {
             return null;
         }
 
-        return fgetcsv($this->inputFileHandle);
+        return (array) fgetcsv($this->inputFileHandle);
     }
 
     /**

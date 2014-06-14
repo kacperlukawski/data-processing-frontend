@@ -141,9 +141,10 @@ class DataFileController extends BaseController {
         $dataFileCurrentVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
         $dataFile = $dataFileCurrentVersion->file;
 
-        $uniqFileName = uniqid('datafile_') . '.csv';
-        copy($dataFileCurrentVersion->path, 'upload/' . $uniqFileName);
-
+        $uniqFileName = 'wolka_' . uniqid('datafile_') . '.csv';    
+        $transformStrategy = TransformHelper::createTransform($transformName, $dataFileCurrentVersion->path, 'upload/' . $uniqFileName, Input::all());
+        $transformStrategy->transform();
+        
         $dataFileNewVersion = new DataFileVersion;
         $dataFileNewVersion->data_file_id = $dataFile->id;
         $dataFileNewVersion->name = $dataFileCurrentVersion->name;

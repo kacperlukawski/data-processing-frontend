@@ -18,6 +18,7 @@
 <ul>
     <li><?php echo Form::hidden('version_id', $dataFile->current->id); ?><?php echo Form::label('Transform type'); ?> <?php echo Form::select('transform', TransformHelper::getAvailableTransforms()); ?></li>
     <li><?php echo Form::label('Key column'); ?> <?php echo Form::select('key_column', TransformHelper::getFileHeaders($dataFile->current->path)); ?></li>
+    <li><?php echo Form::label('Value column'); ?> <?php echo Form::select('value_column', TransformHelper::getFileHeaders($dataFile->current->path)); ?></li>
     <li><?php echo Form::submit('Transform Me!'); ?></li>
 </ul>
 <?php echo Form::close(); ?>
