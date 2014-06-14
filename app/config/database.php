@@ -57,7 +57,7 @@ return array(
 			'host'      => 'https://mariadb-cloud-pr.jelastic.dogado.eu',
 			'database'  => 'data-processing',
 			'username'  => 'root',
-			'password'  => 'I26GB67mwa',
+			'password'  => 'password00', 
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
