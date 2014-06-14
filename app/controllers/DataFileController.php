@@ -22,7 +22,7 @@ class DataFileController extends BaseController {
             App::abort(403);
         }
         
-        return print_r(Session::all(), true);
+        return print_r($dataFile, true);
     }
     
     public function getHistory($dataFileId) {
