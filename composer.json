@@ -20,11 +20,13 @@
     "scripts": {
         "post-install-cmd": [
             "php artisan clear-compiled",
-            "php artisan optimize"
+            "php artisan optimize",
+            "rm -rf vendor/**/**/.git"
         ],
         "post-update-cmd": [
             "php artisan clear-compiled",
-            "php artisan optimize"
+            "php artisan optimize",
+            "rm -rf vendor/**/**/.git"
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"

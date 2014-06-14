@@ -46,6 +46,7 @@ return array(
     'Crypt_TripleDES' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/TripleDES.php',
     'Crypt_Twofish' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Twofish.php',
     'DataFile' => $baseDir . '/app/models/DataFile.php',
+    'DataFileController' => $baseDir . '/app/controllers/DataFileController.php',
     'DataFileVersion' => $baseDir . '/app/models/DataFileVersion.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Doctrine\\Common\\Annotations\\Annotation' => $vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation.php',
