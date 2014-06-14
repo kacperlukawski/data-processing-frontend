@@ -1,4 +1,4 @@
-<h1>Editing </h1>
+<h1>Editing <?php echo htmlspecialchars($dataFileVersion->name); ?></h1>
 <p>
     <a href="<?php echo URL::action('DataFileController@getList'); ?>">Return to list</a>
 </p>
