@@ -98,6 +98,10 @@ class DataFileController extends BaseController {
     	$this->forget($cacheKey);
         
         $dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
+        
+        $dataFileId = $dataFileVersion->data_file_id;
+        $cacheKey = 'data_file_'.$dataFileId;
+        $this->forget($cacheKey);
 
         $dataFileVersionInfo = Input::only('name', 'description');
         $dataFileValidator = Validator::make($dataFileVersionInfo, array(
