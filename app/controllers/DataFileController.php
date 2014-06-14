@@ -2,8 +2,27 @@
 
 class DataFileController extends BaseController {
     
+    public function getCreate() {
+        // display adding new file form
+    }
+    
+    public function postCreate() {
+        // get sent CSV file
+    }
+    
     public function getShow($dataFileId) {
-        // display file with current version info
+        $user = Auth::user();
+        $dataFile = DataFile::find($dataFileId);
+        
+        if ($dataFile === null) {
+            App::abort(404);
+        }
+        
+        if (!($dataFile->user_id == $user->id)) {
+            App::abort(403);
+        }
+        
+        return print_r(Session::all(), true);
     }
     
     public function getHistory($dataFileId) {
