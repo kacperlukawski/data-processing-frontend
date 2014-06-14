@@ -2,3 +2,4 @@
 /vendor/
 /app/config/app.php
 /app/config/database.php
+/app/public/upload/*

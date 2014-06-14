@@ -55,7 +55,10 @@ class DataFileController extends BaseController {
     }
 
     public function getList() {
-        // show full list of user's files
+        $user = Auth::user();
+        $dataFiles = DataFile::where('user_id', '=', $user->id)->get();
+        return View::make('datafile.list')
+                        ->with('dataFiles', $dataFiles);
     }
 
     public function getShow($dataFileId) {
@@ -63,13 +66,33 @@ class DataFileController extends BaseController {
         return View::make('datafile.show')
                         ->with('dataFile', $dataFile);
     }
-    
+
     public function getEdit($dataFileVersionId) {
-        
+        $dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
+        return View::make('datafile.edit')
+                        ->with('dataFileVersion', $dataFileVersion);
     }
-    
+
     public function postEdit() {
+        $dataFileVersionId = Input::get('id');
+        $dataFileVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
+
+        $dataFileVersionInfo = Input::only('name', 'description');
+        $dataFileValidator = Validator::make($dataFileVersionInfo, array(
+                    'name' => 'required',
+                    'description' => 'required'
+        ));
+
+        if ($dataFileValidator->fails()) {
+            return Redirect::action('DataFileController@getEdit')
+                            ->withErrors($dataFileValidator);
+        }
         
+        $dataFileVersion->name = Input::get('name');
+        $dataFileVersion->description = Input::get('description');
+        $dataFileVersion->push();
+        
+        return Redirect::action('DataFileController@getShow', array($dataFileVersion->data_file_id));
     }
 
     public function getHistory($dataFileId) {
@@ -86,10 +109,10 @@ class DataFileController extends BaseController {
     public function postTransform() {
         $dataFileVersionId = Input::get('version_id');
         $transformName = 'empty';
-                
+
         $dataFileCurrentVersion = $this->getDataFileVersionIfAllowed($dataFileVersionId);
         $dataFile = $dataFileCurrentVersion->file;
-        
+
         $uniqFileName = uniqid('datafile_') . '.csv';
         copy($dataFileCurrentVersion->path, 'upload/' . $uniqFileName);
 
@@ -100,10 +123,10 @@ class DataFileController extends BaseController {
         $dataFileNewVersion->path = 'upload/' . $uniqFileName;
         $dataFileNewVersion->size = filesize($dataFileNewVersion->path);
         $dataFileNewVersion->push();
-        
+
         $dataFile->version_id = $dataFileNewVersion->id;
         $dataFile->push();
-        
+
         return Redirect::action('DataFileController@getShow', array($dataFile->id));
     }
 

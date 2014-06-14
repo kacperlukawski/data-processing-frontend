@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://cloud-pr.jelastic.dogado.eu',
+	'url' => 'http://dp.local',
 
 	/*
 	|--------------------------------------------------------------------------

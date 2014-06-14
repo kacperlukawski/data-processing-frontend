@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'mariadb-cloud-pr.jelastic.dogado.eu',
+			'host'      => 'localhost',
 			'database'  => 'data-processing',
 			'username'  => 'root',
-			'password'  => 'password00', 
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

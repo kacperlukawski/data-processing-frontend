@@ -1,9 +1,13 @@
 <h1>File <?php echo htmlspecialchars($dataFile->current->name); ?></h1>
+<p>
+    <a href="<?php echo URL::action('DataFileController@getList'); ?>">Return to list</a>
+</p>
 <p><?php echo nl2br(htmlspecialchars($dataFile->current->description)); ?></p>
 <p>File size: <?php echo $dataFile->current->size; ?></p>
 <p>Created at: <?php echo $dataFile->current->created_at; ?></p>
 <p>
     Options: 
+    <a href="<?php echo URL::action('DataFileController@getEdit', array($dataFile->current->id)); ?>">edit file options</a>
     <a href="<?php echo URL::action('DataFileController@getHistory', array($dataFile->id)); ?>">show file history</a>
     <a href="<?php echo URL::action('DataFileController@getDownload', array($dataFile->current->id)); ?>">download file</a>
 </p>

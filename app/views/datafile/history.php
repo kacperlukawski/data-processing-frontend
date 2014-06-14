@@ -14,15 +14,16 @@
     </thead>
     <tbody>
         <?php foreach ($dataFile->versions as $dataFileVersion): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($dataFileVersion->name); ?></td>
-            <td><?php echo htmlspecialchars($dataFileVersion->description); ?></td>
-            <td><?php echo htmlspecialchars($dataFileVersion->size); ?></td>
-            <td>
-                <a href="<?php echo URL::action('DataFileController@getDownload', array($dataFileVersion->id)); ?>">download file</a>
-            </td>
-            <td><?php echo htmlspecialchars($dataFileVersion->created_at); ?></td>
-        </tr>
+            <tr>
+                <td><?php echo htmlspecialchars($dataFileVersion->name); ?></td>
+                <td><?php echo htmlspecialchars($dataFileVersion->description); ?></td>
+                <td><?php echo htmlspecialchars($dataFileVersion->size); ?></td>
+                <td>
+                    <a href="<?php echo URL::action('DataFileController@getEdit', array($dataFileVersion->id)); ?>">edit file options</a>
+                    <a href="<?php echo URL::action('DataFileController@getDownload', array($dataFileVersion->id)); ?>">download file</a>
+                </td>
+                <td><?php echo htmlspecialchars($dataFileVersion->created_at); ?></td>
+            </tr>
         <?php endforeach; ?>
     </tbody>
 </table>

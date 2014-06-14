@@ -22,7 +22,7 @@ class UserController extends \BaseController {
         }
 
         if (Auth::attempt($userData)) {
-            return Redirect::intended('/');
+            return Redirect::intended(URL::action('DataFileController@getList'));
         }
 
         return Redirect::action('UserController@getLogin')
